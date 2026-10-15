@@ -10,7 +10,7 @@ namespace backPadaria
 {
     internal class Banco
     {
-        private static string stringDeConexao = "Server=10.91.45.48;Port3306;Datebase=padaria_bd;Uid=admin;Pwd12345678";// string de conexao é o caminho para conectar com o banco
+        private static string stringDeConexao = "Server=10.91.45.48;Port=3306;Database=padaria_bd;Uid=admin;Pwd=12345678";// string de conexao é o caminho para conectar com o banco
 
         public static void connectAndTest()
         {
@@ -32,7 +32,7 @@ namespace backPadaria
                     }
 
 
-                }catch (MySqlException ex)
+                }catch (MySqlException ex) 
                 {
                     Console.WriteLine("Erro ao conectar no banco de dados");
                     Console.WriteLine(ex.Message);
