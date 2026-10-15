@@ -1,10 +1,13 @@
-﻿namespace backPadaria
+﻿using backPadaria.Model;
+
+namespace backPadaria
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Banco.connectAndTest();
+
         }
     }
 }
