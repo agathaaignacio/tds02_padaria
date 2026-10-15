@@ -31,11 +31,13 @@ namespace backPadaria
 
                     }
 
-
+                    
                 }catch (MySqlException ex) 
                 {
                     Console.WriteLine("Erro ao conectar no banco de dados");
                     Console.WriteLine(ex.Message);
+
+                    // teste
                 }
                 }
             }
