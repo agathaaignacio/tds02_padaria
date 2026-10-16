@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace backPadaria.Model
 
         public Cliente(string nome, string cpf, string telefone, string endereco, int pontos)
         {
+            if (nome == "") throw new Exception("O nome do cliente não pode ser vazio");
+
             this.Nome = nome;
             this.Cpf = cpf;
             this.Telefone = telefone;
@@ -33,6 +36,10 @@ namespace backPadaria.Model
             this.Telefone = telefone;
             this.Endereco = endereco;
             this.Pontos = pontos;
+        }
+
+        public Cliente(int id) {
+            this.Id = id;
         }
 
         public int Id { get => id; set => id = value; }
@@ -71,10 +78,72 @@ namespace backPadaria.Model
                 /* Execução: Como o comando de INSERT não retorna tabelas (apenas executa uma ação),
                 ele envia o comando configurado para o metodo generico 'executarComando' da classe 'Banco',
                 0 método retorna 1 (se o usuario for inserido com sucesso) ou -1 (se houver erro no banco). */
-            
+
                 return Banco.executarComando(cmd);
             }
-            
+
         }
-    }
-}
+
+        public static int Deletar(Cliente cliente)
+        {
+            string sql = "DELETE FROM `Cliente` WHERE  `Id` = @id";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                cmd.Parameters.AddWithValue("@id", cliente.id);
+
+                return Banco.executarComando(cmd);
+            }
+        }
+
+        public static List<Cliente> ListarTodos()
+        {
+            string sql = "SELECT * FROM `Cliente` ";
+            List<Cliente> ListaClientes = new();
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                using (MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd))
+                /* Executa a leitura. 0 bloco 'using' aqui é FUNDAMENTAL para garantir que o reader seja fechado no final, o que por sua vez fecha a conexao com o banco. */
+                {
+                    while (reader.Read())
+                    /* o While vai rodas uma vez par CADA linha que existir na tabela Cliente. */
+                    {
+                        int id = reader.GetInt32("Id");
+
+
+                        string nome = validarCampo(reader["Nome"]);
+                        string cpf = validarCampo(reader["CPF"]);
+                        string telefone = validarCampo(reader["Telefone"]);
+                        string endereco = validarCampo(reader["Endereco"]);
+
+                        int pontos = reader.GetInt32("Pontos");
+
+                        Cliente cliente = new Cliente(id, nome, cpf, telefone, endereco, pontos);
+                        // Criar o objeto Cliente com os dados extraídos
+
+                        ListaClientes.Add(cliente);
+                        // Adicionar este cliente á nossa lista
+                    }
+                }
+
+                return ListaClientes;
+                // Retorna a lista completa (se a tabela estiver vazia, retorna uma lista com 0 itens)
+            }
+        }
+
+
+
+        private static string validarCampo(object campo)
+        {
+            if (campo == DBNull.Value || campo == null)
+            {
+                return " ";
+            }
+            else {
+                return campo.ToString();
+            }
+        }
+            }
+        } 
+

@@ -84,7 +84,7 @@ namespace backPadaria
             }
         }
 
-        public static int  executarComandoComRetornoId(MySqlCommand command)
+        public static int executarComandoComRetornoId(MySqlCommand command)
         /* Declaracao do metodo: publico e estático, projetado especificamente para executar comandos(geralmente INSERTs seguidos de SELECT LAST_INSERT_ID()) e retornar o ID gerado pelo banco. */
         {
             using (var conexao = new MySqlConnection(stringDeConexao))
@@ -105,12 +105,12 @@ namespace backPadaria
                     {
                         retorno = int.Parse(objRetorno.ToString());
                         /* Se passou na verificacão, converte o objeto (que veio como texto/objeto) para um numero inteiro (int) */
-
-                        return retorno;
+                            
                     }
+                    return retorno;
 
                 }
-                catch(MySqlException ex)
+                catch (MySqlException ex)
                 {
                     Console.WriteLine($"Erro de Banco de Dados {ex.Message}");
                     return -1;
