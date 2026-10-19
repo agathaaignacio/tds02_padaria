@@ -183,7 +183,6 @@ namespace backPadaria.Model
             }
         }
 
-
         private static string validarCampo(object campo)
         {
             if (campo == DBNull.Value || campo == null)

@@ -64,7 +64,7 @@ namespace backPadaria
             else
             {
                 Console.WriteLine("O cliente não foi encontrado !! ");
-            }*/
+            }
 
             Cliente? meuCliente = Cliente.ListarPorId(4);
 
@@ -78,8 +78,62 @@ namespace backPadaria
                 {
                     Console.WriteLine("Cliente Atualizado com Sucesso!");
                 }
-            }
+            } */
 
+            /*  ***** FUNCIONARIO *****
+               --- Adicionar Funcionario  --- 
+            Console.WriteLine("Digite o nome do funcionario: ");
+            string nomeFuncionario = Console.ReadLine();
+
+            Console.WriteLine("Digite o cpf do funcionario: ");
+            string cpfFuncionario = Console.ReadLine();
+
+            Console.WriteLine("Digite o cargo do funcionario: ");
+            string cargoFuncionario = Console.ReadLine();
+
+           Refatoração :  reescrever
+            Funcionario funcionario1 = new Funcionario(nome: nomeFuncionario, cpf: cpfFuncionario, cargo: cargoFuncionario);
+
+            Funcionario.Inserir(funcionario1); 
+
+            // --- Deletar Funcionario ---
+            Funcionario funcionarioParaDeletar = new Funcionario(3);
+
+            if(Funcionario.Deletar(funcionarioParaDeletar) >= 1)
+            {
+                Console.WriteLine("Funcionario excluido com sucesso. Ok");
+            }
+            else
+            {
+                Console.WriteLine("Deu bom não. Funcionario presente! "); 
+            } 
+            
+              --- Listar Funcionarios ---
+            List<Funcionario> funcionarios = Funcionario.ListarTodos();
+                 foreach(Funcionario funcionario in funcionarios)
+             {
+                 Console.WriteLine($"Id: {funcionario.Id}");
+                 Console.WriteLine($"Nome:  {funcionario.Nome}");
+                 Console.WriteLine($"CPF:  {funcionario.Cpf}");
+                 Console.WriteLine($"Cargo:  {funcionario.Cargo}");
+                 Console.WriteLine("---------------------------------------");
+
+             }  
+
+               // --- Listar Por ID --- 
+            Funcionario? funci = Funcionario.ListarPorId(2);
+
+            if(funci != null)
+            {
+                Console.WriteLine($"ID: {funci.Id}");
+                Console.WriteLine($"Nome:  {funci.Nome}");
+                Console.WriteLine($"CPF:  {funci.Cpf}");
+                Console.WriteLine($"Cargo:  {funci.Cargo}");
+            }
+            else
+            {
+                Console.WriteLine("O funcionario não foi encontrado !! ");
+            }*/
 
 
 
