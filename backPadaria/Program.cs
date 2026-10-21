@@ -1,4 +1,5 @@
 ﻿using backPadaria.Model;
+using backPadaria.Service;
 
 namespace backPadaria
 {
@@ -79,6 +80,18 @@ namespace backPadaria
                     Console.WriteLine("Cliente Atualizado com Sucesso!");
                 }
             } */
+
+ 
+
+            
+            ClienteService.MenuCliente();
+
+
+
+
+
+
+            //-----------------------------------------------------------------------------
 
             /*  ***** FUNCIONARIO *****
                --- Adicionar Funcionario  --- 
