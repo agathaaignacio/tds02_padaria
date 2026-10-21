@@ -86,7 +86,7 @@ namespace backPadaria
 
             //ClienteService.MenuCliente();
 
-            FuncionarioService.MenuFuncionario();
+          // FuncionarioService.MenuFuncionario();
 
 
 
