@@ -44,7 +44,7 @@ namespace backPadaria.Service
                             break;
 
                         case "3": // buscar
-                            BuscarClientePorID();
+                            BuscarClientePorIDMenu();
                             break;
 
                         case "4": // Atualizar
@@ -52,7 +52,16 @@ namespace backPadaria.Service
                             break;
 
                         case "5": // Excluir
-                            ExcluirClienteMenu();
+                            deletarClienteMenu();
+                            break;
+
+                        case "6": // Visualizar
+                            visualizarPontuacaoMenu();
+                            break;
+
+                        case "0": // Sair
+                            sair = true;
+                            Console.WriteLine("Sistema Encerrado! ");
                             break;
                     }
 
@@ -69,19 +78,19 @@ namespace backPadaria.Service
         {
             Console.WriteLine("------ CADASTRAR CLIENTE ----- ");
 
-            Console.WriteLine("Digite o nome do cliente: ");
+            Console.Write("Digite o nome do cliente: ");
             string nomeCliente = Console.ReadLine();
 
-            Console.WriteLine("Digite o endereço do cliente: ");
+            Console.Write("Digite o endereço do cliente: ");
             string enderecoCliente = Console.ReadLine();
 
-            Console.WriteLine("Digite o cpf do cliente: ");
+            Console.Write("Digite o cpf do cliente: ");
             string cpfCliente = Console.ReadLine();
 
-            Console.WriteLine("Digite o telefone do cliente: ");
+            Console.Write("Digite o telefone do cliente: ");
             string telefoneCliente = Console.ReadLine();
 
-            Console.WriteLine("Digite a quantidade de pontos");
+            Console.Write("Digite a quantidade de pontos");
             int pontosCliente = int.Parse(Console.ReadLine());
 
 
@@ -90,8 +99,8 @@ namespace backPadaria.Service
             int resultadoInsert = Cliente.Inserir(NovoCliente);
             Console.Clear();
 
-            if (resultadoInsert > 0) Console.WriteLine("Cliente cadastrado com sucesso!!");
-        } // cadastro do cliente
+            if (resultadoInsert > 0) Console.WriteLine("Cliente cadastrado com sucesso!!\n");
+        } // FIM CADASTRO CLIENTE
 
         private static void listarClientesMenu()
         {
@@ -115,9 +124,9 @@ namespace backPadaria.Service
             Console.WriteLine("\nPressione uma tecla para continuar...");
             Console.ReadKey();
             Console.Clear();
-        } // fim lista de clientes
+        } // FIM LISTAR CLIENTES
 
-        public static void BuscarClientePorID()
+        public static void BuscarClientePorIDMenu()
         {
             Console.WriteLine(" ---- Buscar Cliente por ID ---- ");
             Console.WriteLine("Digite o ID do cliente: ");
@@ -142,7 +151,7 @@ namespace backPadaria.Service
             Console.Clear();
 
 
-        } // fim busca cliente id
+        } // FIM BUSCAR CLIENTE ID
 
         private static void atualizarClienteMenu()
         {
@@ -178,32 +187,72 @@ namespace backPadaria.Service
             }
 
             Console.ReadKey();
-            
-        } // fim atualizar cliente 
 
-        private static void ExcluirClienteMenu()
+        } // FIM ATUALIZAR CLIENTE
+
+        private static void deletarClienteMenu()
         {
-            Console.WriteLine("----- EXCLUIR CLIENTE -----");
-            Console.WriteLine("Digite o id do cliente que deseja excluir: ");
+            Console.WriteLine("----- EXCLUIR CLIENTE POR ID -----");
+            Console.WriteLine("Digite o ID do cliente que deseja excluir: ");
+                        int id = int.Parse(Console.ReadLine());
 
-            int idBusca = 0;
-            int.TryParse(Console.ReadLine(), out idBusca);
-
-            Cliente clienteParaExcluir = Cliente.ListarPorId(idBusca);
-
-            if (clienteParaExcluir != null)
+            Cliente clienteParaDeletar = Cliente.ListarPorId(id);
+            if (clienteParaDeletar != null)
             {
-                Console.WriteLine($"Excluir dados do cliente {clienteParaExcluir.Nome}? ");
-               Console.ReadKey();
+                Console.WriteLine($"Tem certeza que deseja excluir o cliente {clienteParaDeletar.Nome} (S/N)?");
+                string opcao = Console.ReadLine();
 
-                int resultadoAtualizacao = Cliente.Deletar(clienteParaExcluir);
-                 Console.WriteLine("Cliente excluido com sucesso! ");
-
+                if (opcao.ToUpper() == "S")
+                {
+                    int clienteDeletado = Cliente.Deletar(clienteParaDeletar);
+                    Console.WriteLine("Cliente excluído com sucesso.");
+                }
+                else if (opcao.ToUpper() == "N")
+                {
+                    Console.WriteLine("Exclusão cancelada.");
+                }
+                else
+                {
+                    Console.WriteLine("Opção inválida.");
+                }
             }
-        }
-        
+            else
+            {
+                Console.WriteLine("Cliente não encontrado.");
+            }
+
+        } // FIM DELETAR
+
+        private static void visualizarPontuacaoMenu()
+        {
+            Console.WriteLine("----- VISUALIZAR PONTUAÇÃO -----");
+            Console.WriteLine("Digite o ID do cliente que deseja consultar:");
+
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("ID inválido.");
+                return;
+            }
+
+            Cliente cliente = Cliente.ListarPorId(id);
+
+            if (cliente != null)
+            {
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine($"ID do cliente: {cliente.Id}");
+                Console.WriteLine($"Nome: {cliente.Nome}");
+                Console.WriteLine($"Pontuação: {cliente.Pontos}");
+                Console.WriteLine("-------------------------------");
+            }
+            else
+            {
+                Console.WriteLine("Cliente não encontrado.");
+            }
+        } // FIM VISUALIZAR PONTUAÇÃO
+
+
 
 
 
     } // classe cliente service
-} // namespace
+    } // namespace
