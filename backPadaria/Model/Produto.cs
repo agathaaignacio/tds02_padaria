@@ -53,21 +53,112 @@ namespace BackPadaria.Model
 
         public static int Inserir(Produto produto)
         {
-            string sql = "INSERT INTO `Produto` (`Nome`, `Preco`,`Categoria`,`Fabricado`, `MarcaId` )" +
-                " VALUES (@Nome, @Preco, @Categoria, @Fabricado, @MarcaId)";
+            string sql = "INSERT INTO `Produto` (Nome, Preco, Categoria, Fabricado MarcaId) VALUES " +
+                "(@Nome, @Preco, @Categoria, @Fabricado, @MarcaId)";
 
             using (var cmd = new MySqlCommand(sql))
             {
                 cmd.Parameters.AddWithValue("@Nome", produto.Nome);
-                cmd.Parameters.AddWithValue("@Preco", preco.Cpf);
-                cmd.Parameters.AddWithValue("@Cargo", funcionario.Cargo);
+                cmd.Parameters.AddWithValue("@Preco", produto.Preco);
+                cmd.Parameters.AddWithValue("@Categoria", produto.Categoria);
+                cmd.Parameters.AddWithValue("@Fabricado", produto.Fabricado);
+                cmd.Parameters.AddWithValue("@MarcaId", produto.MarcaId);
 
                 return Banco.executarComando(cmd);
             }
+        } // FIM INSERIR
 
-        } // Inserir
+        public static int Deletar(Produto produto)
+        {
+            string sql = "DELETE FROM `Produto` WHERE `Id` = @id";
+            using (var cmd = new MySqlCommand(sql))
+
+            {
+                cmd.Parameters.AddWithValue("@id", produto.id);
+                return Banco.executarComando(cmd);
+            }
+        } // Fim Deletar
+
+        public static List<Produto> ListarTodos()
+        {
+            string sql = "SELECT * FROM `Produto`";
+            List<Produto> listaProduto = new();
+            using (var cmd = new MySqlCommand(sql))
+            {
+                using (MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd))
+                {
+
+                    while (reader.Read())
+
+                    {
+
+                        int id = reader.GetInt32("Id");
+                        string nome = validarCampo(reader["Nome"]);
+                        decimal preco = reader.GetDecimal("Preco");
+                        string categoria = validarCampo(reader["Categoria"]);
+                        bool fabricado = reader.GetBoolean("Fabricado");
+                        int marcaId = reader.GetInt32("MarcaId");
+
+                        Produto produto = new(id, nome, preco, categoria, fabricado, marcaId);
+                        listaProduto.Add(produto);
+
+                    }
+                }
+                return listaProduto;
+            }
+        } // FIM LISTAR
+
+        public static Produto? ListarPorId(int id)
+        {
+            string sql = "SELECT * FROM `Produto` WHERE `id` = @Id";
+            using (var cmd = new MySqlCommand(sql))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd);
+                Produto produto = null;
+                while (reader.Read())
+                {
+
+                    int idBanco = reader.GetInt32("Id");
+                    string nome = validarCampo(reader["Nome"]);
+                    decimal preco = reader.GetDecimal("Preco");
+                    string categoria = validarCampo(reader["Categoria"]);
+                    bool fabricado = reader.GetBoolean("Fabricado");
+                    int marcaId = reader.GetInt32("MarcaId");
+                }
+                return produto;
+            }
+        } //FIM LISTAR POR ID
+
+        public static int Atualizar(Produto produto)
+        {
+            string sql = @"UPDATE Produto SET Nome = @Nome, Preco = @Preco, Categoria = @Categoria, Fabricado = @Fabricado, MarcaId = @MarcaId, WHERE Id = @Id";
+            using (var cmd = new MySqlCommand(sql))
+            {
+                cmd.Parameters.AddWithValue("@Nome", produto.Nome);
+                cmd.Parameters.AddWithValue("@Preco", produto.Preco);
+                cmd.Parameters.AddWithValue("@Categoria", produto.Categoria);
+                cmd.Parameters.AddWithValue("@Fabricado", produto.Fabricado);
+                cmd.Parameters.AddWithValue("@MarcaId", produto.MarcaId);
+
+                return Banco.executarComando(cmd);
+            }
+        } // FIM ATUALIZAR
+
+        private static string validarCampo(object campo)
+        {
+            if (campo == DBNull.Value || campo == null)
+            {
+                return " ";
+            }
+            else
+            {
+                return campo.ToString();
 
 
 
-    } // classe produto
-} // namespace
+            }
+        } // fim validar
+         
+    }// classe produto
+}  // namespace

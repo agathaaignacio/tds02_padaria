@@ -121,7 +121,7 @@ namespace backPadaria.Service
 
             int id = int.Parse(Console.ReadLine());
 
-            Cliente funcionario = Cliente.ListarPorId(id);
+            Funcionario funcionario = Funcionario.ListarPorId(id);
             if (funcionario == null)
             {
                 Console.WriteLine("Nenhum Funcionário cadastrado no sistema");

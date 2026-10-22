@@ -81,18 +81,11 @@ namespace backPadaria
                 }
             } */
 
+            //------------------------ MENU SERVICE -----------------------------------------
 
+             //ClienteService.MenuCliente();
 
-
-            //ClienteService.MenuCliente();
-
-          // FuncionarioService.MenuFuncionario();
-
-
-
-
-
-
+            // FuncionarioService.MenuFuncionario();
 
 
             //-----------------------------------------------------------------------------

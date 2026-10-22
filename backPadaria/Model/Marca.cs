@@ -13,13 +13,6 @@ namespace backPadaria.Model
         private string nome;
         private string telefone;
 
-        public Marca(string nome, string telefone)
-        {
-            if (string.IsNullOrWhiteSpace(nome)) throw new Exception("O nome da marca não pode ser vazio");
-            this.nome = nome;
-            this.telefone = telefone;
-        }
-
         public Marca(int id, string nome, string telefone)
         {
             this.id = id;
@@ -27,10 +20,13 @@ namespace backPadaria.Model
             this.telefone = telefone;
         }
 
-        public Marca(int id)
+        public Marca(string nome, string telefone)
+
         {
-            this.id = id;
-        } // gamb teste
+            this.nome = nome;
+            this.telefone = telefone;
+
+        }
 
         public int Id { get => id; set => id = value; }
         public string Nome { get => nome; set => nome = value; }
@@ -47,7 +43,7 @@ namespace backPadaria.Model
 
                 return Banco.executarComando(cmd);
             }
-        }
+        } // FIM INSERIR
 
         public static int Deletar(Marca marca)
         {
@@ -68,6 +64,7 @@ namespace backPadaria.Model
             {
                 using (MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd))
                 {
+
                     while (reader.Read())
 
                     {
@@ -76,14 +73,14 @@ namespace backPadaria.Model
                         string nome = validarCampo(reader["Nome"]);
                         string telefone = validarCampo(reader["Telefone"]);
 
-                        Marca marca = new Marca(id, nome, telefone);
+                        Marca marca = new (id, nome, telefone);
                         listaMarca.Add(marca);
 
                     }
                 }
                 return listaMarca;
             }
-        }
+        } // FIM LISTAR
 
         public static Marca? ListarPorId(int id)
         {
@@ -92,18 +89,18 @@ namespace backPadaria.Model
             {
                 cmd.Parameters.AddWithValue("@Id", id);
                 MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd);
-                Marca? marca = null;
+                Marca marca = null;
                 while (reader.Read())
                 {
 
                     int idBanco = reader.GetInt32("Id");
                     string nome = validarCampo(reader["Nome"]);
                     string telefone = validarCampo(reader["Telefone"]);
-                    marca = new Marca(idBanco, nome, telefone);
+                    marca = new (id, nome, telefone);
                 }
                 return marca;
             }
-        }
+        } //FIM LISTAR POR ID
 
         public static int Atualizar(Marca marca)
         {
@@ -116,7 +113,7 @@ namespace backPadaria.Model
 
                 return Banco.executarComando(cmd);
             }
-        }
+        } // FIM ATUALIZAR
 
         private static string validarCampo(object campo)
         {
@@ -130,7 +127,7 @@ namespace backPadaria.Model
                 return campo.ToString();
             }
 
-        }
+        } // FIM VALIDAR
 
     } // classe marca
 } // namespace
