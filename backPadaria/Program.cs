@@ -81,16 +81,9 @@ namespace backPadaria
                 }
             } */
 
-            //------------------------ MENU SERVICE -----------------------------------------
-
-             //ClienteService.MenuCliente();
-
-            // FuncionarioService.MenuFuncionario();
-
-
-            //-----------------------------------------------------------------------------
 
             /*  ***** FUNCIONARIO *****
+             
                --- Adicionar Funcionario  --- 
             Console.WriteLine("Digite o nome do funcionario: ");
             string nomeFuncionario = Console.ReadLine();
@@ -144,6 +137,26 @@ namespace backPadaria
             {
                 Console.WriteLine("O funcionario não foi encontrado !! ");
             }*/
+
+
+            //------------------------ MENU SERVICE -----------------------------------------
+
+            //ClienteService.MenuCliente();
+
+            // FuncionarioService.MenuFuncionario();
+
+
+            //-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 
