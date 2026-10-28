@@ -146,6 +146,8 @@ namespace backPadaria
             // FuncionarioService.MenuFuncionario();
 
 
+            VendaService.MenuVendas();
+
             //-----------------------------------------------------------------------------
 
 
