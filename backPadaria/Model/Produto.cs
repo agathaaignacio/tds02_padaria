@@ -121,7 +121,10 @@ namespace BackPadaria.Model
             {
                 cmd.Parameters.AddWithValue("@Id", id);
                 MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd);
+
                 Produto produto = null;
+
+
                 while (reader.Read())
                 {
 
@@ -131,6 +134,8 @@ namespace BackPadaria.Model
                     string categoria = validarCampo(reader["Categoria"]);
                     bool fabricado = reader.GetBoolean("Fabricado");
                     int marcaId = reader.GetInt32("MarcaId");
+
+                    produto = new Produto(id, nome, preco, categoria, fabricado, marcaId);
                 }
                 return produto;
             }

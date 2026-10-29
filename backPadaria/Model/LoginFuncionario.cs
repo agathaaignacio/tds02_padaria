@@ -5,7 +5,7 @@ using BCrypt.Net;
 
 namespace backPadaria.Model
 {
-    public class LoginFuncionario
+    internal class LoginFuncionario
     {
         public int Id { get; set; }
         public int FuncionarioId { get; set; }
@@ -40,7 +40,7 @@ namespace backPadaria.Model
 
                 return Banco.executarComando(cmd);
             }
-        }
+        } // fim inserir
 
         // Retorna uma Tupla contendo o Funcionário logado e o seu Perfil de acesso
         public static (Funcionario? Funcionario, string Perfil) Autenticar(string loginDigitado, string senhaTextoLimpo)
@@ -76,7 +76,7 @@ namespace backPadaria.Model
 
                 return (null, string.Empty);
             }
-        }
+        } 
 
 
 
